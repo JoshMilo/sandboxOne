@@ -1,0 +1,41 @@
+:root {
+  --brand-foreground4: var(--white);
+  --brand-background: var(--brand-600);
+}
+
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ivory;
+}
+
+button {
+  position: absolute;
+  top: -21rem;
+  right: 0;
+  color: #fff;
+  background-color: #5b5fc7;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  box-shadow: 0 0.2rem 0.4rem -0.075rem rgb(0 0 0 / 25%);
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.875rem;
+  height: 1.999rem;
+  -ms-flex-pack: center;
+  justify-content: center;
+  min-width: 6.429rem;
+  max-width: 17.5rem;
+  line-height: 1.15;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  text-decoration: none;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
