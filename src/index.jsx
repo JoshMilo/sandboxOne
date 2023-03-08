@@ -15,7 +15,7 @@ root.render(
     //     position: [ 4, 2, 6 ]
     // } }
     camera={{
-      position: [0, 1.1, 7],
+      position: [0, 1.1, 8],
     }}
   >
     <Experience />

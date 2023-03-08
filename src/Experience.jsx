@@ -13,12 +13,14 @@ import { useMemo, useEffect, useState, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { BBAll } from "./Scene"
+import { SoccerBall } from "./soccer_ball"
 
 export default function Experience() {
   const [hitSound] = useState(() => new Audio("./hit.mp3"))
   const twister = useRef()
   const cube = useRef()
-  const [isToggled, setIsToggled] = useState(false)
+  const [isBasketBall, setisBasketBall] = useState(false)
+  const [isSoccerBall, setisSoccerBall] = useState(false)
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
@@ -88,32 +90,6 @@ export default function Experience() {
       <Physics gravity={[0, -9.08, 0]}>
         <Debug />
 
-        {/* <RigidBody colliders="ball" position={[-1.5, 2, 0]}>
-          <mesh castShadow>
-            <sphereGeometry />
-            <meshStandardMaterial color="orange" />
-          </mesh>
-        </RigidBody> */}
-
-        {/* <RigidBody
-          ref={cube}
-          position={[1.5, 2, 0]}
-          gravityScale={1}
-          restitution={0}
-          friction={0.7} will estler? 
-          colliders={false}
-          // onCollisionEnter={ collisionEnter }
-          // onCollisionExit={ () => { console.log('exit') } }
-          // onSleep={ () => { console.log('sleep') } }
-          // onWake={ () => { console.log('wake') } }
-        >
-          <mesh castShadow onClick={cubeJump}>
-            <boxGeometry />
-            <meshStandardMaterial color="mediumpurple" />
-          </mesh>
-          <CuboidCollider mass={2} args={[0.5, 0.5, 0.5]} />
-        </RigidBody> */}
-
         <RigidBody type="fixed" restitution={0} friction={0.7}>
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
@@ -121,25 +97,27 @@ export default function Experience() {
           </mesh>
         </RigidBody>
         <Html>
-          <button onClick={() => setIsToggled(!isToggled)}>Turn in</button>
+          <button
+            onClick={() => {
+              setisBasketBall(!isBasketBall)
+              setisSoccerBall(false)
+            }}
+          >
+            Turn in 1
+          </button>
         </Html>
-        {/* 
-            <RigidBody
-                ref={ twister }
-                position={ [ 0, - 0.8, 0 ] }
-                friction={ 0 }
-                type="kinematicPosition"
-            >
-                <mesh castShadow scale={ [ 0.4, 0.4, 3 ] }>
-                    <boxGeometry />
-                    <meshStandardMaterial color="red" />
-                </mesh>
-            </RigidBody> */}
 
-        {/* <RigidBody colliders={ false } position={ [ 0, 4, 0 ] }>
-                <primitive object={ hamburger.scene } scale={ 0.25 } />
-                <CylinderCollider args={ [ 0.5, 1.25 ] } />
-            </RigidBody> */}
+        <Html>
+          <button
+            className="soccer"
+            onClick={() => {
+              setisSoccerBall(!isSoccerBall)
+              setisBasketBall(false)
+            }}
+          >
+            Turn in 2
+          </button>
+        </Html>
 
         <RigidBody type="fixed">
           <CuboidCollider args={[5, 2, 0.5]} position={[0, 1, 5.25]} />
@@ -148,17 +126,7 @@ export default function Experience() {
           <CuboidCollider args={[0.5, 2, 5]} position={[-5.25, 1, 0]} />
         </RigidBody>
 
-        {/* <InstancedRigidBodies
-                positions={ cubeTransforms.positions }
-                rotations={ cubeTransforms.rotations }
-                scales={ cubeTransforms.scales }
-            >
-                <instancedMesh ref={ cubes } castShadow receiveShadow args={ [ null, null, cubesCount ] }>
-                    <sphereGeometry  />
-                    <meshStandardMaterial color="tomato" />
-                </instancedMesh>
-            </InstancedRigidBodies> */}
-        {isToggled && (
+        {isBasketBall && (
           <>
             {[...Array(cubesCount)].map((_, i) => (
               <RigidBody
@@ -173,7 +141,26 @@ export default function Experience() {
                 friction={0.7}
               >
                 <BBAll />
-                {/* <CylinderCollider args={[0.5, 1.25]} /> */}
+              </RigidBody>
+            ))}
+          </>
+        )}
+
+        {isSoccerBall && (
+          <>
+            {[...Array(cubesCount)].map((_, i) => (
+              <RigidBody
+                colliders="ball"
+                position={[
+                  (Math.random() - 0.5) * 8,
+                  6 + i * 0.2,
+                  (Math.random() - 0.5) * 8,
+                ]}
+                scale={0.5}
+                restitution={0.7}
+                friction={0.7}
+              >
+                <SoccerBall />
               </RigidBody>
             ))}
           </>
